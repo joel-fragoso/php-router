@@ -26,7 +26,7 @@ final class Router
 
 		$callback = $this->routes[$id];
 
-		call_user_func($callback);
+		$callback();
 	}
 
 	private function parserId(string $id): string
