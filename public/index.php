@@ -22,3 +22,5 @@ $router->addRoute('/users', function () {
 $uri = $_SERVER['REQUEST_URI'];
 
 $router->dispatch($uri);
+
+var_dump($router);
