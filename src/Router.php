@@ -3,11 +3,15 @@
 namespace Prix;
 
 use Closure;
-use Prix\Exception\InvalidArgumentException;
+use Prix\Exception\RouteAlreadyExistException;
+use Prix\Exception\RouteNotFoundException;
 use call_user_func;
 
 final class Router
 {
+	/**
+	 * @var array $routes
+	 */
 	private $routes = [];
 
 	/**
@@ -20,6 +24,12 @@ final class Router
 	{
 		$id = $this->parserId($id);
 
+		foreach ($this->routes as $key => $cb) {
+			if ($key === $id) {
+				throw new RouteAlreadyExistException("The route ({$id}) already exist.", 400);
+			}
+		}
+
 		$this->routes[$id] = $callback;
 	}
 
@@ -27,13 +37,14 @@ final class Router
 	 * @var string $id
 	 *
 	 * @return mixed
+   * @throws RouteNotFoundException
 	 */
 	public function dispatch(string $id)
 	{
 		$id = $this->parserId($id);
 
 		if (!isset($this->routes[$id])) {
-			throw new InvalidArgumentException("The route ({$id}) does not exist", 400);
+			throw new RouteNotFoundException("The route ({$id}) does not exist.", 400);
 		}
 
 		$callback = $this->routes[$id];

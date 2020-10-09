@@ -4,24 +4,54 @@ namespace Prix\Tests;
 
 use PHPUnit\Framework\TestCase;
 use Prix\Router;
+use Prix\Exception\RouteAlreadyExistException;
+use Prix\Exception\RouteNotFoundException;
 
+/**
+ * Class RouterTest
+ * @group RouterTest
+ * @author Joel Fragoso <joelfragoso85@icloud.com>
+ */
 final class RouterTest extends TestCase
 {
-	private $router;
-
-	public function setUp(): void
-	{
-		$this->router = new Router();
-	}
-
 	public function testCreateRouter(): void
 	{
-		$this->router->addRoute('/', function () {
+		$router = new Router();
+
+		$router->addRoute('/', function () {
 			echo 'Test';
 		});
 
-		$dispatch = $this->router->dispatch('/');
+		$this->assertObjectHasAttribute('routes', $router);
+	}
 
-		$this->assertEquals('Test', 'Test');
+	public function testRouteAlreadyExist(): void
+	{
+		$router = new Router();
+
+		$router->addRoute('/test', function () {
+			echo 'Test';
+		});
+
+		$this->expectException(RouteAlreadyExistException::class);
+
+		$router->addRoute('/test', function () {
+			echo 'Test';
+		});
+
+		$router->dispatch('/test');
+	}
+
+	public function testRouteNotFound(): void
+	{
+		$router = new Router();
+
+		$router->addRoute('/', function () {
+			echo 'Test';
+		});
+
+		$this->expectException(RouteNotFoundException::class);
+
+		$router->dispatch('/test');
 	}
 }
