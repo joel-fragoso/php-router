@@ -12,7 +12,7 @@
   "minimum-stability": "stable",
   "scripts": {
     "start": "php -S localhost:3333 -t public/ public/index.php",
-    "test": "./vendor/bin/phpunit --colors=always"
+    "test": "./vendor/bin/phpunit --colors=always --coverage-html=coverage --coverage-text"
   },
   "require": {
     "php": ">=7.2"
