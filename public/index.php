@@ -7,6 +7,7 @@ date_default_timezone_set('America/Sao_Paulo');
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use Exception;
 use Prix\Router;
 
 $router = new Router();
@@ -21,6 +22,10 @@ $router->addRoute('/users', function () {
 
 $uri = $_SERVER['REQUEST_URI'];
 
-$router->dispatch($uri);
+try {
+    $router->dispatch($uri);
+} catch (Exception $e) {
+    echo $e->getMessage();
+}
 
 var_dump($router);
