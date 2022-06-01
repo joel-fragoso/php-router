@@ -17,7 +17,7 @@ final class Router
 	/**
 	 * @var string $id
 	 * @var Closure $callback
-   *
+     *
 	 * @return void
 	 */
 	public function addRoute(string $id, Closure $callback): void
@@ -37,7 +37,7 @@ final class Router
 	 * @var string $id
 	 *
 	 * @return mixed
-   * @throws RouteNotFoundException
+     * @throws RouteNotFoundException
 	 */
 	public function dispatch(string $id)
 	{
