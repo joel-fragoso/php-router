@@ -35,6 +35,9 @@ composer.phar
 /app/phpunit.xml
 /phpunit.xml
 
+# Coverage
+/coverage/
+
 # Build data
 /build/
 
